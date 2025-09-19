@@ -1,15 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE_BACKEND = "weather-app-backend"
-        DOCKER_IMAGE_FRONTEND = "weather-app-frontend"
-    }
-
     stages {
-        stage('Checkout Code') {
+        stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/weather-app.git'
+                git branch: 'main', url: 'https://github.com/zakeerhussain074/weather-app.git'
             }
         }
 
