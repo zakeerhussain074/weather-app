@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'https://github.com/zakeerhussain074/weather-app.git'
+                git branch: 'master', url: 'https://github.com/zakeerhussain074/weather-app.git'
             }
         }
 
