@@ -9,6 +9,12 @@ pipeline {
         }
 
         stage('Build Backend') {
+            agent {
+                docker {
+                    image 'maven:3.9.6-eclipse-temurin-17'   // Maven + JDK 17
+                    args '-v /root/.m2:/root/.m2'           // cache dependencies
+                }
+            }
             steps {
                 dir('weather-service') {
                     sh 'mvn clean package -DskipTests'
@@ -17,6 +23,11 @@ pipeline {
         }
 
         stage('Build Frontend') {
+            agent {
+                docker {
+                    image 'node:18'                        // NodeJS + npm
+                }
+            }
             steps {
                 dir('weather-ui') {
                     sh 'npm install'
