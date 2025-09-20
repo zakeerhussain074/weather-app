@@ -10,6 +10,13 @@ pipeline {
 
     stages {
 
+        stage('Checkout') {
+            steps {
+                echo "Cloning repo..."
+                git branch: 'master', url: 'https://github.com/zakeerhussain074/weather-app.git'
+            }
+        }
+
         stage('Build Backend') {
             steps {
                 dir('weather-service') {
