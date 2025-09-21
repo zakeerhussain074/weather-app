@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  backend:
+    build:
+      context: ./weather-service
+      dockerfile: Dockerfile
+    container_name: weather-backend
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./weather-ui
+      dockerfile: Dockerfile
+    container_name: weather-frontend
+    ports:
+      - "4200:80"
+    environment:
+      - API_URL=http://localhost:8080
+    depends_on:
+      - backend
