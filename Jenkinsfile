@@ -10,12 +10,16 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+       stage('Checkout') {
             steps {
                 echo "Cloning repo..."
-                git branch: 'master', url: 'https://github.com/zakeerhussain074/weather-app.git'
-            }
+                checkout([$class: 'GitSCM',
+                branches: [[name: '*/master']],
+                userRemoteConfigs: [[url: 'https://github.com/zakeerhussain074/weather-app.git']]
+                    ])
+                }
         }
+
 
         stage('Build Backend') {
             steps {
