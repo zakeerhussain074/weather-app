@@ -2,24 +2,21 @@ pipeline {
     agent any
 
     environment {
-        // Optional: define tool names if you configured them in Jenkins Global Tool Config
         MAVEN_HOME = tool name: 'Maven', type: 'maven'
-        NODEJS_HOME = tool name: 'NodeJS-20', type: 'NodeJS'
-        PATH = "${MAVEN_HOME}/bin:${NODEJS_HOME}/bin:${env.PATH}"
+        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
     }
 
     stages {
 
-       stage('Checkout') {
+        stage('Checkout') {
             steps {
                 echo "Cloning repo..."
                 checkout([$class: 'GitSCM',
-                branches: [[name: '*/master']],
-                userRemoteConfigs: [[url: 'https://github.com/zakeerhussain074/weather-app.git']]
-                    ])
-                }
+                    branches: [[name: '*/master']],
+                    userRemoteConfigs: [[url: 'https://github.com/zakeerhussain074/weather-app.git']]
+                ])
+            }
         }
-
 
         stage('Build Backend') {
             steps {
@@ -34,8 +31,10 @@ pipeline {
             steps {
                 dir('weather-ui') {
                     echo "Building Angular frontend..."
-                    sh "npm install"
-                    sh "npm run build -- --configuration=production"
+                    nodejs(nodeJSInstallationName: 'NodeJS-20') {
+                        sh "npm install"
+                        sh "npm run build -- --configuration=production"
+                    }
                 }
             }
         }
