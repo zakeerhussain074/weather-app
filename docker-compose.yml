@@ -5,9 +5,10 @@ services:
     build: ./weather-service
     container_name: weather-backend
     ports:
-      - "8081:8080"   # changed host port to avoid Jenkins conflict
+      - "9090:8080"   # host:container
     networks:
       - weather-app
+
 
   frontend:
     build: ./weather-ui
