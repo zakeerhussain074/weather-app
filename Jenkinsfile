@@ -46,22 +46,14 @@ pipeline {
             }
         }
 
-      stage('Run Containers') {
-          steps {
-             echo "Running Docker containers..."
-             sh """
-             docker-compose down || true
-             docker network rm weather-app_default || true
-             docker-compose up -d
-             """
-          }
-      }
-
-
         stage('Run Containers') {
             steps {
                 echo "Running Docker containers..."
-                sh "docker-compose up -d"
+                sh """
+                    docker-compose down || true
+                    docker network rm weather-app_default || true
+                    docker-compose up -d
+                """
             }
         }
     }
