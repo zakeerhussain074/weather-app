@@ -1,22 +1,24 @@
-version: "3.9"
+version: "3.8"
+
 services:
   backend:
     build: ./weather-service
     container_name: weather-backend
     ports:
-      - "8081:8080"   # host:container
+      - "8081:8080"   # changed host port to avoid Jenkins conflict
     networks:
       - weather-app
 
-
   frontend:
-    build:
-      context: ./weather-ui
-      dockerfile: Dockerfile
+    build: ./weather-ui
     container_name: weather-frontend
     ports:
       - "4200:80"
-    environment:
-      - API_URL=http://localhost:8080
     depends_on:
       - backend
+    networks:
+      - weather-app
+
+networks:
+  weather-app:
+    driver: bridge
